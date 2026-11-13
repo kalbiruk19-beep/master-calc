@@ -1,3 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- This meta tag ensures the app fits perfectly on your Samsung screen -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Master Calc & Converter</title>
+    <!-- We will create this file in Step 2 -->
+    <link rel="stylesheet" href="style.css">
+      <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#bb86fc">
+</head>
+<body>
+
+    <header>
+        <h1>Master Calc</h1>
+    </header>
+
+    <main id="app-container">
+        <!-- MAIN MENU -->
+        <section id="main-menu" class="view active">
+            <h2>Select a Tool</h2>
+            <div class="menu-grid">
+                <button class="menu-btn" data-target="unit-converter">📏 Units</button>
+                <button class="menu-btn" data-target="algebra">🔢 Algebra</button>
+                <button class="menu-btn" data-target="geometry">📐 Geometry</button>
+                <button class="menu-btn" data-target="finance">💰 Finance</button>
+                <button class="menu-btn" data-target="health">🏥 Health</button>
+                <button class="menu-btn" data-target="datetime">📅 Date/Time</button>
+            </div>
+        </section>
+
+        <!-- PLACEHOLDERS FOR FUTURE STEPS -->
+                <section id="unit-converter" class="view">
+            <h2>Unit Converter</h2>
+            
+            <label>Category:</label>
+            <select id="unit-category">
+                <option value="length">📏 Length</option>
+                <option value="weight">⚖️ Weight</option>
+                <option value="temperature">🌡️ Temperature</option>
+            </select>
+
+            <label>Enter Value:</label>
+            <input type="number" id="unit-input" placeholder="e.g., 100" inputmode="decimal">
+
+            <label>From:</label>
+            <select id="unit-from"></select>
+
+            <label>To:</label>
+            <select id="unit-to"></select>
+
+            <button class="action-btn" id="convert-btn">Convert</button>
+            
+            <div class="result-box" id="unit-result">Result will appear here</div>
+                </section>
+                <!-- ALGEBRA SECTION -->
+        <section id="algebra" class="view">
+            <h2>Algebra Tools</h2>
+            
+            <h3>Pythagorean Theorem (Find Hypotenuse C)</h3>
+            <input type="number" id="pyth-a" placeholder="Side A" inputmode="decimal">
+            <input type="number" id="pyth-b" placeholder="Side B" inputmode="decimal">
+            <button class="action-btn" id="pyth-btn">Calculate C</button>
+            <div class="result-box" id="pyth-result">Result will appear here</div>
+
+            <hr style="border: 0; border-top: 1px solid #333; margin: 25px 0;">
+
+            <h3>Solve for X (ax + b = c)</h3>
+            <input type="number" id="eq-a" placeholder="a" inputmode="decimal">
+            <input type="number" id="eq-b" placeholder="b" inputmode="decimal">
+            <input type="number" id="eq-c" placeholder="c" inputmode="decimal">
+            <button class="action-btn" id="eq-btn">Solve for X</button>
+            <div class="result-box" id="eq-result">Result will appear here</div>
+        </section>
+
+        <!-- GEOMETRY SECTION -->
+        <section id="geometry" class="view">
+            <h2>Geometry Tools</h2>
+            
+            <h3>Area of a Circle</h3>
+            <input type="number" id="circle-r" placeholder="Radius (r)" inputmode="decimal">
+            <button class="action-btn" id="circle-btn">Calculate Area</button>
+            <div class="result-box" id="circle-result">Result will appear here</div>
+
+            <hr style="border: 0; border-top: 1px solid #333; margin: 25px 0;">
+
+            <h3>Area of a Rectangle</h3>
+            <input type="number" id="rect-w" placeholder="Width" inputmode="decimal">
+            <input type="number" id="rect-h" placeholder="Height" inputmode="decimal">
+            <button class="action-btn" id="rect-btn">Calculate Area</button>
+            <div class="result-box" id="rect-result">Result will appear here</div>
+        </section>
+        
+                <!-- FINANCE SECTION -->
+        <section id="finance" class="view">
+            <h2>Finance Tools</h2>
+            
+            <h3>Monthly Loan Payment</h3>
+            <input type="number" id="loan-amount" placeholder="Loan Amount ($)" inputmode="decimal">
+            <input type="number" id="loan-rate" placeholder="Annual Interest Rate (%)" inputmode="decimal">
+            <input type="number" id="loan-months" placeholder="Term (in months)" inputmode="numeric">
+            <button class="action-btn" id="loan-btn">Calculate Payment</button>
+            <div class="result-box" id="loan-result">Result will appear here</div>
+        </section>
+
         <!-- HEALTH SECTION -->
         <section id="health" class="view">
             <h2>Health Tools</h2>
@@ -39,4 +145,4 @@
       }
       </script>
 </body>
-              </html>
+        </html>
