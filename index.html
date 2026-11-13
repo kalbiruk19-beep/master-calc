@@ -1,0 +1,42 @@
+        <!-- HEALTH SECTION -->
+        <section id="health" class="view">
+            <h2>Health Tools</h2>
+            
+            <h3>BMI Calculator</h3>
+            <input type="number" id="bmi-weight" placeholder="Weight (kg)" inputmode="decimal">
+            <input type="number" id="bmi-height" placeholder="Height (cm)" inputmode="decimal">
+            <button class="action-btn" id="bmi-btn">Calculate BMI</button>
+            <div class="result-box" id="bmi-result">Result will appear here</div>
+        </section>
+        
+                <!-- DATE & TIME SECTION -->
+        <section id="datetime" class="view">
+            <h2>Date & Time Tools</h2>
+            
+            <h3>Age Calculator</h3>
+            <label>Date of Birth:</label>
+            <input type="date" id="age-dob">
+            <button class="action-btn" id="age-btn">Calculate Age</button>
+            <div class="result-box" id="age-result">Result will appear here</div>
+
+            <hr style="border: 0; border-top: 1px solid #333; margin: 25px 0;">
+
+            <h3>Days Between Dates</h3>
+            <label>Start Date:</label>
+            <input type="date" id="days-start">
+            <label>End Date:</label>
+            <input type="date" id="days-end">
+            <button class="action-btn" id="days-btn">Calculate Days</button>
+            <div class="result-box" id="days-result">Result will appear here</div>
+        </section>
+    </main>
+
+    <!-- We will create this file in Step 3 -->
+    <script src="script.js"></script>
+      <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js');
+      }
+      </script>
+</body>
+              </html>
