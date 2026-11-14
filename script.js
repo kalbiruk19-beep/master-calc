@@ -368,4 +368,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
         resultBox.textContent = `Total: $${total.toFixed(2)} (Interest: $${interest.toFixed(2)})`;
     });
+      // --- STANDARD CALCULATOR LOGIC ---
+    const calcDisplay = document.getElementById('calc-display');
+    const calcButtons = document.querySelectorAll('.calc-btn');
+
+    calcButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const val = btn.getAttribute('data-val');
+
+            if (val === 'C') {
+                calcDisplay.value = '';
+            } else if (val === 'DEL') {
+                calcDisplay.value = calcDisplay.value.slice(0, -1);
+            } else if (val === '=') {
+                try {
+                    // eval() runs the math string (e.g., "12+7*2")
+                    calcDisplay.value = eval(calcDisplay.value);
+                } catch (e) {
+                    calcDisplay.value = 'Error';
+                    setTimeout(() => { calcDisplay.value = ''; }, 1500);
+                }
+            } else {
+                calcDisplay.value += val;
+            }
+        });
+    });
 });
