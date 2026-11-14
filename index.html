@@ -116,6 +116,20 @@
             <input type="number" id="loan-months" placeholder="Term (in months)" inputmode="numeric">
             <button class="action-btn" id="loan-btn">Calculate Payment</button>
             <div class="result-box" id="loan-result">Result will appear here</div>
+                    <hr style="border: 0; border-top: 1px solid #333; margin: 25px 0;">
+
+            <h3>Compound Interest</h3>
+            <input type="number" id="ci-principal" placeholder="Principal Amount ($)" inputmode="decimal">
+            <input type="number" id="ci-rate" placeholder="Annual Interest Rate (%)" inputmode="decimal">
+            <input type="number" id="ci-years" placeholder="Number of Years" inputmode="numeric">
+            <label>Compounded:</label>
+            <select id="ci-frequency">
+                <option value="1">Annually (Once a year)</option>
+                <option value="12">Monthly (12 times a year)</option>
+                <option value="365">Daily (365 times a year)</option>
+            </select>
+            <button class="action-btn" id="ci-btn">Calculate Total</button>
+            <div class="result-box" id="ci-result">Result will appear here</div>
         </section>
 
         <!-- HEALTH SECTION -->
@@ -185,4 +199,4 @@
       }
       </script>
 </body>
-    </html>
+                                   </html>
