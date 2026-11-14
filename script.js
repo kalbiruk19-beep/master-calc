@@ -1,202 +1,371 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <!-- This meta tag ensures the app fits perfectly on your Samsung screen -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Master Calc & Converter</title>
-    <!-- We will create this file in Step 2 -->
-    <link rel="stylesheet" href="style.css">
-      <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#bb86fc">
-</head>
-<body>
-
-    <header>
-        <h1>Master Calc</h1>
-    </header>
-
-    <main id="app-container">
-        <!-- MAIN MENU -->
-        <section id="main-menu" class="view active">
-            <h2>Select a Tool</h2>
-            <div class="menu-grid">
-                <button class="menu-btn" data-target="unit-converter">📏 Units</button>
-                <button class="menu-btn" data-target="algebra">🔢 Algebra</button>
-                <button class="menu-btn" data-target="geometry">📐 Geometry</button>
-                <button class="menu-btn" data-target="finance">💰 Finance</button>
-                <button class="menu-btn" data-target="health">🏥 Health</button>
-                <button class="menu-btn" data-target="datetime">📅 Date/Time</button>
-            </div>
-        </section>
-
-        <!-- PLACEHOLDERS FOR FUTURE STEPS -->
-                <section id="unit-converter" class="view">
-            <h2>Unit Converter</h2>
+// Wait for the HTML to fully load before running
+document.addEventListener('DOMContentLoaded', () => {
+    const menuButtons = document.querySelectorAll('.menu-btn');
+    const views = document.querySelectorAll('.view');
+    
+    // 1. Add a "Back" button to every section except the main menu
+    views.forEach(view => {
+        if (view.id !== 'main-menu') {
+            const backBtn = document.createElement('button');
+            backBtn.className = 'back-btn';
+            backBtn.textContent = '← Back to Menu';
+            view.prepend(backBtn); // Puts the button at the top of the section
             
-            <label>Category:</label>
-            <select id="unit-category">
-                <option value="length">📏 Length</option>
-                <option value="weight">⚖️ Weight</option>
-                <option value="temperature">🌡️ Temperature</option>
-            </select>
+            // Make the back button return to the main menu
+            backBtn.addEventListener('click', () => {
+                showView('main-menu');
+            });
+        }
+    });
 
-            <label>Enter Value:</label>
-            <input type="number" id="unit-input" placeholder="e.g., 100" inputmode="decimal">
+    // 2. Add tap events to all main menu buttons
+    menuButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const targetId = button.getAttribute('data-target');
+            showView(targetId);
+        });
+    });
 
-            <label>From:</label>
-            <select id="unit-from"></select>
-
-            <label>To:</label>
-            <select id="unit-to"></select>
-
-            <button class="action-btn" id="convert-btn">Convert</button>
-            
-            <div class="result-box" id="unit-result">Result will appear here</div>
-                </section>
-                <!-- ALGEBRA SECTION -->
-        <section id="algebra" class="view">
-            <h2>Algebra Tools</h2>
-            
-            <h3>Pythagorean Theorem (Find Hypotenuse C)</h3>
-            <input type="number" id="pyth-a" placeholder="Side A" inputmode="decimal">
-            <input type="number" id="pyth-b" placeholder="Side B" inputmode="decimal">
-            <button class="action-btn" id="pyth-btn">Calculate C</button>
-            <div class="result-box" id="pyth-result">Result will appear here</div>
-
-            <hr style="border: 0; border-top: 1px solid #333; margin: 25px 0;">
-
-            <h3>Solve for X (ax + b = c)</h3>
-            <input type="number" id="eq-a" placeholder="a" inputmode="decimal">
-            <input type="number" id="eq-b" placeholder="b" inputmode="decimal">
-            <input type="number" id="eq-c" placeholder="c" inputmode="decimal">
-            <button class="action-btn" id="eq-btn">Solve for X</button>
-            <div class="result-box" id="eq-result">Result will appear here</div>
-        </section>
-
-        <!-- GEOMETRY SECTION -->
-        <section id="geometry" class="view">
-            <h2>Geometry Tools</h2>
-            
-            <h3>Area of a Circle</h3>
-            <input type="number" id="circle-r" placeholder="Radius (r)" inputmode="decimal">
-            <button class="action-btn" id="circle-btn">Calculate Area</button>
-            <div class="result-box" id="circle-result">Result will appear here</div>
-
-            <hr style="border: 0; border-top: 1px solid #333; margin: 25px 0;">
-
-            <h3>Area of a Rectangle</h3>
-            <input type="number" id="rect-w" placeholder="Width" inputmode="decimal">
-            <input type="number" id="rect-h" placeholder="Height" inputmode="decimal">
-            <button class="action-btn" id="rect-btn">Calculate Area</button>
-            <div class="result-box" id="rect-result">Result will appear here</div>
-                   <hr style="border: 0; border-top: 1px solid #333; margin: 25px 0;">
-
-            <h3>Area of a Triangle</h3>
-            <input type="number" id="tri-b" placeholder="Base" inputmode="decimal">
-            <input type="number" id="tri-h" placeholder="Height" inputmode="decimal">
-            <button class="action-btn" id="tri-btn">Calculate Area</button>
-            <div class="result-box" id="tri-result">Result will appear here</div>
-
-            <hr style="border: 0; border-top: 1px solid #333; margin: 25px 0;">
-
-            <h3>Volume of a Sphere</h3>
-            <input type="number" id="sphere-r" placeholder="Radius (r)" inputmode="decimal">
-            <button class="action-btn" id="sphere-btn">Calculate Volume</button>
-            <div class="result-box" id="sphere-result">Result will appear here</div>
-        </section>
+    // 3. Function to handle switching screens
+    function showView(viewId) {
+        // Hide all views first
+        views.forEach(view => {
+            view.classList.remove('active');
+        });
         
-                <!-- FINANCE SECTION -->
-        <section id="finance" class="view">
-            <h2>Finance Tools</h2>
-            
-            <h3>Monthly Loan Payment</h3>
-            <input type="number" id="loan-amount" placeholder="Loan Amount ($)" inputmode="decimal">
-            <input type="number" id="loan-rate" placeholder="Annual Interest Rate (%)" inputmode="decimal">
-            <input type="number" id="loan-months" placeholder="Term (in months)" inputmode="numeric">
-            <button class="action-btn" id="loan-btn">Calculate Payment</button>
-            <div class="result-box" id="loan-result">Result will appear here</div>
-                    <hr style="border: 0; border-top: 1px solid #333; margin: 25px 0;">
+        // Show the specific view we want
+        const targetView = document.getElementById(viewId);
+        if (targetView) {
+            targetView.classList.add('active');
+        }
+    }
+      // --- UNIT CONVERTER LOGIC ---
+    const unitData = {
+        length: { meter: 1, kilometer: 1000, centimeter: 0.01, mile: 1609.34, foot: 0.3048, inch: 0.0254 },
+        weight: { kilogram: 1, gram: 0.001, pound: 0.453592, ounce: 0.0283495 },
+        temperature: { celsius: 'C', fahrenheit: 'F', kelvin: 'K' }
+    };
 
-            <h3>Compound Interest</h3>
-            <input type="number" id="ci-principal" placeholder="Principal Amount ($)" inputmode="decimal">
-            <input type="number" id="ci-rate" placeholder="Annual Interest Rate (%)" inputmode="decimal">
-            <input type="number" id="ci-years" placeholder="Number of Years" inputmode="numeric">
-            <label>Compounded:</label>
-            <select id="ci-frequency">
-                <option value="1">Annually (Once a year)</option>
-                <option value="12">Monthly (12 times a year)</option>
-                <option value="365">Daily (365 times a year)</option>
-            </select>
-            <button class="action-btn" id="ci-btn">Calculate Total</button>
-            <div class="result-box" id="ci-result">Result will appear here</div>
-        </section>
+    const categorySelect = document.getElementById('unit-category');
+    const fromSelect = document.getElementById('unit-from');
+    const toSelect = document.getElementById('unit-to');
+    const unitInput = document.getElementById('unit-input');
+    const convertBtn = document.getElementById('convert-btn');
+    const unitResult = document.getElementById('unit-result');
 
-        <!-- HEALTH SECTION -->
-        <section id="health" class="view">
-            <h2>Health Tools</h2>
-            
-            <h3>BMI Calculator</h3>
-            <input type="number" id="bmi-weight" placeholder="Weight (kg)" inputmode="decimal">
-            <input type="number" id="bmi-height" placeholder="Height (cm)" inputmode="decimal">
-            <button class="action-btn" id="bmi-btn">Calculate BMI</button>
-            <div class="result-box" id="bmi-result">Result will appear here</div>
-                   <hr style="border: 0; border-top: 1px solid #333; margin: 25px 0;">
-
-            <h3>BMR Calculator</h3>
-            <label>Gender:</label>
-            <select id="bmr-gender">
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-            </select>
-            <input type="number" id="bmr-weight" placeholder="Weight (kg)" inputmode="decimal">
-            <input type="number" id="bmr-height" placeholder="Height (cm)" inputmode="decimal">
-            <input type="number" id="bmr-age" placeholder="Age (years)" inputmode="numeric">
-            <button class="action-btn" id="bmr-btn">Calculate BMR</button>
-            <div class="result-box" id="bmr-result">Result will appear here</div>
-
-            <hr style="border: 0; border-top: 1px solid #333; margin: 25px 0;">
-
-            <h3>Daily Calorie Needs (TDEE)</h3>
-            <label>Activity Level:</label>
-            <select id="tdee-activity">
-                <option value="1.2">Sedentary (Little to no exercise)</option>
-                <option value="1.375">Lightly Active (1-3 days/week)</option>
-                <option value="1.55">Moderately Active (3-5 days/week)</option>
-                <option value="1.725">Very Active (6-7 days/week)</option>
-            </select>
-            <button class="action-btn" id="tdee-btn">Calculate Daily Calories</button>
-            <div class="result-box" id="tdee-result">Result will appear here</div>
-        </section>
+    // Function to populate the From/To dropdowns
+    function populateUnits() {
+        const category = categorySelect.value;
+        const units = Object.keys(unitData[category]);
         
-                <!-- DATE & TIME SECTION -->
-        <section id="datetime" class="view">
-            <h2>Date & Time Tools</h2>
-            
-            <h3>Age Calculator</h3>
-            <label>Date of Birth:</label>
-            <input type="date" id="age-dob">
-            <button class="action-btn" id="age-btn">Calculate Age</button>
-            <div class="result-box" id="age-result">Result will appear here</div>
+        fromSelect.innerHTML = '';
+        toSelect.innerHTML = '';
+        
+        units.forEach(unit => {
+            fromSelect.innerHTML += `<option value="${unit}">${unit}</option>`;
+            toSelect.innerHTML += `<option value="${unit}">${unit}</option>`;
+        });
+        // Set default "To" to the second unit so it doesn't match "From"
+        if (units.length > 1) toSelect.value = units[1]; 
+    }
 
-            <hr style="border: 0; border-top: 1px solid #333; margin: 25px 0;">
+    // Listen for category change and run on initial load
+    categorySelect.addEventListener('change', populateUnits);
+    populateUnits(); 
 
-            <h3>Days Between Dates</h3>
-            <label>Start Date:</label>
-            <input type="date" id="days-start">
-            <label>End Date:</label>
-            <input type="date" id="days-end">
-            <button class="action-btn" id="days-btn">Calculate Days</button>
-            <div class="result-box" id="days-result">Result will appear here</div>
-        </section>
-    </main>
+    // Convert button logic
+    convertBtn.addEventListener('click', () => {
+        const val = parseFloat(unitInput.value);
+        if (isNaN(val)) {
+            unitResult.textContent = 'Please enter a valid number';
+            return;
+        }
 
-    <!-- We will create this file in Step 3 -->
-    <script src="script.js"></script>
-      <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./sw.js');
-      }
-      </script>
-</body>
-</html>
+        const category = categorySelect.value;
+        const from = fromSelect.value;
+        const to = toSelect.value;
+        let result;
+
+        if (category === 'temperature') {
+            result = convertTemp(val, from, to);
+        } else {
+            // Standard conversion formula
+            const fromFactor = unitData[category][from];
+            const toFactor = unitData[category][to];
+            result = (val * fromFactor) / toFactor;
+        }
+
+        unitResult.textContent = `${val} ${from} = ${result.toFixed(4)} ${to}`;
+    });
+
+    // Special helper function for Temperature
+    function convertTemp(val, from, to) {
+        let celsius;
+        if (from === 'celsius') celsius = val;
+        else if (from === 'fahrenheit') celsius = (val - 32) * 5/9;
+        else celsius = val - 273.15; // kelvin
+
+        if (to === 'celsius') return celsius.toFixed(2);
+        if (to === 'fahrenheit') return ((celsius * 9/5) + 32).toFixed(2);
+        return (celsius + 273.15).toFixed(2); // kelvin
+    }
+      // --- ALGEBRA & GEOMETRY LOGIC ---
+
+    // 1. Pythagorean Theorem (a^2 + b^2 = c^2)
+    document.getElementById('pyth-btn').addEventListener('click', () => {
+        const a = parseFloat(document.getElementById('pyth-a').value);
+        const b = parseFloat(document.getElementById('pyth-b').value);
+        const resultBox = document.getElementById('pyth-result');
+
+        if (isNaN(a) || isNaN(b)) {
+            resultBox.textContent = 'Please enter both Side A and Side B';
+            return;
+        }
+        const c = Math.sqrt(a * a + b * b);
+        resultBox.textContent = `Hypotenuse (C) = ${c.toFixed(4)}`;
+    });
+
+    // 2. Solve for X (ax + b = c  =>  x = (c - b) / a)
+    document.getElementById('eq-btn').addEventListener('click', () => {
+        const a = parseFloat(document.getElementById('eq-a').value);
+        const b = parseFloat(document.getElementById('eq-b').value);
+        const c = parseFloat(document.getElementById('eq-c').value);
+        const resultBox = document.getElementById('eq-result');
+
+        if (isNaN(a) || isNaN(b) || isNaN(c)) {
+            resultBox.textContent = 'Please enter values for a, b, and c';
+            return;
+        }
+        if (a === 0) {
+            resultBox.textContent = '"a" cannot be zero';
+            return;
+        }
+        const x = (c - b) / a;
+        resultBox.textContent = `x = ${x.toFixed(4)}`;
+    });
+
+    // 3. Area of a Circle (π * r^2)
+    document.getElementById('circle-btn').addEventListener('click', () => {
+        const r = parseFloat(document.getElementById('circle-r').value);
+        const resultBox = document.getElementById('circle-result');
+
+        if (isNaN(r) || r < 0) {
+            resultBox.textContent = 'Please enter a valid radius';
+            return;
+        }
+        const area = Math.PI * r * r;
+        resultBox.textContent = `Area = ${area.toFixed(4)}`;
+    });
+
+    // 4. Area of a Rectangle (width * height)
+    document.getElementById('rect-btn').addEventListener('click', () => {
+        const w = parseFloat(document.getElementById('rect-w').value);
+        const h = parseFloat(document.getElementById('rect-h').value);
+        const resultBox = document.getElementById('rect-result');
+
+        if (isNaN(w) || isNaN(h) || w < 0 || h < 0) {
+            resultBox.textContent = 'Please enter valid dimensions';
+            return;
+        }
+        const area = w * h;
+        resultBox.textContent = `Area = ${area.toFixed(4)}`;
+    });
+      // --- FINANCE & HEALTH LOGIC ---
+
+    // 1. Monthly Loan Payment
+    document.getElementById('loan-btn').addEventListener('click', () => {
+        const amount = parseFloat(document.getElementById('loan-amount').value);
+        const annualRate = parseFloat(document.getElementById('loan-rate').value);
+        const months = parseFloat(document.getElementById('loan-months').value);
+        const resultBox = document.getElementById('loan-result');
+
+        if (isNaN(amount) || isNaN(annualRate) || isNaN(months) || months <= 0) {
+            resultBox.textContent = 'Please fill in all fields correctly';
+            return;
+        }
+
+        let monthlyPayment;
+        
+        if (annualRate === 0) {
+            // Special case for 0% interest to avoid dividing by zero
+            monthlyPayment = amount / months;
+        } else {
+            const r = annualRate / 100 / 12; // Monthly interest rate
+            const n = months;
+            // Standard loan payment formula
+            monthlyPayment = amount * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+        }
+
+        resultBox.textContent = `Monthly Payment: $${monthlyPayment.toFixed(2)}`;
+    });
+
+    // 2. BMI Calculator
+    document.getElementById('bmi-btn').addEventListener('click', () => {
+        const weightKg = parseFloat(document.getElementById('bmi-weight').value);
+        const heightCm = parseFloat(document.getElementById('bmi-height').value);
+        const resultBox = document.getElementById('bmi-result');
+
+        if (isNaN(weightKg) || isNaN(heightCm) || weightKg <= 0 || heightCm <= 0) {
+            resultBox.textContent = 'Please enter valid weight and height';
+            return;
+        }
+
+        // Convert cm to meters
+        const heightM = heightCm / 100;
+        const bmi = weightKg / (heightM * heightM);
+        
+        // Determine category
+        let category = '';
+        if (bmi < 18.5) category = '(Underweight)';
+        else if (bmi < 25) category = '(Normal weight)';
+        else if (bmi < 30) category = '(Overweight)';
+        else category = '(Obese)';
+
+        resultBox.textContent = `BMI: ${bmi.toFixed(1)} ${category}`;
+    });
+      // --- DATE & TIME LOGIC ---
+
+    // 1. Age Calculator
+    document.getElementById('age-btn').addEventListener('click', () => {
+        const dobStr = document.getElementById('age-dob').value;
+        const resultBox = document.getElementById('age-result');
+
+        if (!dobStr) {
+            resultBox.textContent = 'Please select your Date of Birth';
+            return;
+        }
+
+        const dob = new Date(dobStr);
+        const today = new Date();
+        
+        let years = today.getFullYear() - dob.getFullYear();
+        let months = today.getMonth() - dob.getMonth();
+        
+        // Adjust if the birthday hasn't happened yet this year
+        if (months < 0 || (months === 0 && today.getDate() < dob.getDate())) {
+            years--;
+            months += 12;
+        }
+
+        resultBox.textContent = `You are ${years} years and ${months} months old`;
+    });
+
+    // 2. Days Between Dates
+    document.getElementById('days-btn').addEventListener('click', () => {
+        const startStr = document.getElementById('days-start').value;
+        const endStr = document.getElementById('days-end').value;
+        const resultBox = document.getElementById('days-result');
+
+        if (!startStr || !endStr) {
+            resultBox.textContent = 'Please select both Start and End dates';
+            return;
+        }
+
+        const startDate = new Date(startStr);
+        const endDate = new Date(endStr);
+        
+        // Calculate difference in milliseconds and convert to days
+        const diffTime = Math.abs(endDate - startDate);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        resultBox.textContent = `There are ${diffDays} days between these dates`;
+    });
+      // --- BMR & CALORIE LOGIC ---
+
+    // 1. BMR Calculator (Mifflin-St Jeor Equation)
+    document.getElementById('bmr-btn').addEventListener('click', () => {
+        const gender = document.getElementById('bmr-gender').value;
+        const weight = parseFloat(document.getElementById('bmr-weight').value);
+        const height = parseFloat(document.getElementById('bmr-height').value);
+        const age = parseFloat(document.getElementById('bmr-age').value);
+        const resultBox = document.getElementById('bmr-result');
+
+        if (isNaN(weight) || isNaN(height) || isNaN(age)) {
+            resultBox.textContent = 'Please fill in all fields';
+            return;
+        }
+
+        let bmr;
+        if (gender === 'male') {
+            bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+        } else {
+            bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+        }
+
+        resultBox.textContent = `BMR: ${Math.round(bmr)} calories/day`;
+    });
+
+    // 2. Daily Calorie Needs (TDEE)
+    document.getElementById('tdee-btn').addEventListener('click', () => {
+        const gender = document.getElementById('bmr-gender').value;
+        const weight = parseFloat(document.getElementById('bmr-weight').value);
+        const height = parseFloat(document.getElementById('bmr-height').value);
+        const age = parseFloat(document.getElementById('bmr-age').value);
+        const activity = parseFloat(document.getElementById('tdee-activity').value);
+        const resultBox = document.getElementById('tdee-result');
+
+        if (isNaN(weight) || isNaN(height) || isNaN(age)) {
+            resultBox.textContent = 'Please fill in Weight, Height, and Age above first';
+            return;
+        }
+
+        // Calculate BMR first internally
+        let bmr;
+        if (gender === 'male') {
+            bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+        } else {
+            bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+        }
+
+        // Multiply by activity level
+        const tdee = bmr * activity;
+        resultBox.textContent = `Daily Calories: ${Math.round(tdee)} kcal`;
+    });
+      // --- MORE GEOMETRY LOGIC ---
+
+    // 5. Area of a Triangle (0.5 * base * height)
+    document.getElementById('tri-btn').addEventListener('click', () => {
+        const b = parseFloat(document.getElementById('tri-b').value);
+        const h = parseFloat(document.getElementById('tri-h').value);
+        const resultBox = document.getElementById('tri-result');
+
+        if (isNaN(b) || isNaN(h) || b < 0 || h < 0) {
+            resultBox.textContent = 'Please enter valid base and height';
+            return;
+        }
+        const area = 0.5 * b * h;
+        resultBox.textContent = `Area = ${area.toFixed(4)}`;
+    });
+
+    // 6. Volume of a Sphere (4/3 * π * r^3)
+    document.getElementById('sphere-btn').addEventListener('click', () => {
+        const r = parseFloat(document.getElementById('sphere-r').value);
+        const resultBox = document.getElementById('sphere-result');
+
+        if (isNaN(r) || r < 0) {
+            resultBox.textContent = 'Please enter a valid radius';
+            return;
+        }
+        const volume = (4/3) * Math.PI * Math.pow(r, 3);
+        resultBox.textContent = `Volume = ${volume.toFixed(4)}`;
+    });
+      // --- COMPOUND INTEREST LOGIC ---
+    document.getElementById('ci-btn').addEventListener('click', () => {
+        const principal = parseFloat(document.getElementById('ci-principal').value);
+        const rate = parseFloat(document.getElementById('ci-rate').value) / 100;
+        const years = parseFloat(document.getElementById('ci-years').value);
+        const frequency = parseFloat(document.getElementById('ci-frequency').value);
+        const resultBox = document.getElementById('ci-result');
+
+        if (isNaN(principal) || isNaN(rate) || isNaN(years) || principal <= 0) {
+            resultBox.textContent = 'Please enter valid amounts';
+            return;
+        }
+
+        // Compound Interest Formula: A = P(1 + r/n)^(nt)
+        const total = principal * Math.pow((1 + rate / frequency), frequency * years);
+        const interest = total - principal;
+
+        resultBox.textContent = `Total: $${total.toFixed(2)} (Interest: $${interest.toFixed(2)})`;
+    });
+});
