@@ -48,10 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         speed: { 'km/h': 1, 'mph': 1.60934, 'm/s': 3.6, 'knots': 1.852 },
         data: { byte: 1, kilobyte: 1024, megabyte: 1048576, gigabyte: 1073741824 }
     };
-        length: { meter: 1, kilometer: 1000, centimeter: 0.01, mile: 1609.34, foot: 0.3048, inch: 0.0254 },
-        weight: { kilogram: 1, gram: 0.001, pound: 0.453592, ounce: 0.0283495 },
-        temperature: { celsius: 'C', fahrenheit: 'F', kelvin: 'K' }
-    };
+      
 
     const categorySelect = document.getElementById('unit-category');
     const fromSelect = document.getElementById('unit-from');
