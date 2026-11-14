@@ -321,4 +321,32 @@ document.addEventListener('DOMContentLoaded', () => {
         const tdee = bmr * activity;
         resultBox.textContent = `Daily Calories: ${Math.round(tdee)} kcal`;
     });
+      // --- MORE GEOMETRY LOGIC ---
+
+    // 5. Area of a Triangle (0.5 * base * height)
+    document.getElementById('tri-btn').addEventListener('click', () => {
+        const b = parseFloat(document.getElementById('tri-b').value);
+        const h = parseFloat(document.getElementById('tri-h').value);
+        const resultBox = document.getElementById('tri-result');
+
+        if (isNaN(b) || isNaN(h) || b < 0 || h < 0) {
+            resultBox.textContent = 'Please enter valid base and height';
+            return;
+        }
+        const area = 0.5 * b * h;
+        resultBox.textContent = `Area = ${area.toFixed(4)}`;
+    });
+
+    // 6. Volume of a Sphere (4/3 * π * r^3)
+    document.getElementById('sphere-btn').addEventListener('click', () => {
+        const r = parseFloat(document.getElementById('sphere-r').value);
+        const resultBox = document.getElementById('sphere-result');
+
+        if (isNaN(r) || r < 0) {
+            resultBox.textContent = 'Please enter a valid radius';
+            return;
+        }
+        const volume = (4/3) * Math.PI * Math.pow(r, 3);
+        resultBox.textContent = `Volume = ${volume.toFixed(4)}`;
+    });
 });
