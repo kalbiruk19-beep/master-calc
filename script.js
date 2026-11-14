@@ -270,4 +270,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
         resultBox.textContent = `There are ${diffDays} days between these dates`;
     });
+      // --- BMR & CALORIE LOGIC ---
+
+    // 1. BMR Calculator (Mifflin-St Jeor Equation)
+    document.getElementById('bmr-btn').addEventListener('click', () => {
+        const gender = document.getElementById('bmr-gender').value;
+        const weight = parseFloat(document.getElementById('bmr-weight').value);
+        const height = parseFloat(document.getElementById('bmr-height').value);
+        const age = parseFloat(document.getElementById('bmr-age').value);
+        const resultBox = document.getElementById('bmr-result');
+
+        if (isNaN(weight) || isNaN(height) || isNaN(age)) {
+            resultBox.textContent = 'Please fill in all fields';
+            return;
+        }
+
+        let bmr;
+        if (gender === 'male') {
+            bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+        } else {
+            bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+        }
+
+        resultBox.textContent = `BMR: ${Math.round(bmr)} calories/day`;
+    });
+
+    // 2. Daily Calorie Needs (TDEE)
+    document.getElementById('tdee-btn').addEventListener('click', () => {
+        const gender = document.getElementById('bmr-gender').value;
+        const weight = parseFloat(document.getElementById('bmr-weight').value);
+        const height = parseFloat(document.getElementById('bmr-height').value);
+        const age = parseFloat(document.getElementById('bmr-age').value);
+        const activity = parseFloat(document.getElementById('tdee-activity').value);
+        const resultBox = document.getElementById('tdee-result');
+
+        if (isNaN(weight) || isNaN(height) || isNaN(age)) {
+            resultBox.textContent = 'Please fill in Weight, Height, and Age above first';
+            return;
+        }
+
+        // Calculate BMR first internally
+        let bmr;
+        if (gender === 'male') {
+            bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+        } else {
+            bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+        }
+
+        // Multiply by activity level
+        const tdee = bmr * activity;
+        resultBox.textContent = `Daily Calories: ${Math.round(tdee)} kcal`;
+    });
 });
