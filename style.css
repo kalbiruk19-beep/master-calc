@@ -159,3 +159,30 @@ label {
     color: var(--text-muted);
     font-size: 0.9rem;
 }
+/* 5. Standard Calculator Grid */
+.calc-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.calc-btn {
+    background-color: var(--surface-color);
+    color: var(--text-color);
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 20px 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+.calc-btn:active {
+    background-color: #334155;
+    transform: scale(0.95);
+}
+
+.calc-btn.clear { color: #ff4d4d; }
+.calc-btn.equals { background-color: var(--primary-color); color: #0f172a; }
+.calc-btn.delete { color: #fbbf24; }
