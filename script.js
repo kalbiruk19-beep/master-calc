@@ -393,4 +393,31 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+      // --- TIP CALCULATOR LOGIC ---
+    document.getElementById('tip-btn').addEventListener('click', () => {
+        const bill = parseFloat(document.getElementById('tip-bill').value);
+        const percent = parseFloat(document.getElementById('tip-percent').value);
+        let people = parseFloat(document.getElementById('tip-people').value);
+        const resultBox = document.getElementById('tip-result');
+
+        if (isNaN(bill) || isNaN(percent)) {
+            resultBox.textContent = 'Please enter bill and tip %';
+            return;
+        }
+
+        // If people is empty or 0, default to 1
+        if (isNaN(people) || people <= 0) {
+            people = 1;
+        }
+
+        const tipAmount = bill * (percent / 100);
+        const total = bill + tipAmount;
+        const perPerson = total / people;
+
+        if (people === 1) {
+            resultBox.textContent = `Tip: $${tipAmount.toFixed(2)} | Total: $${total.toFixed(2)}`;
+        } else {
+            resultBox.textContent = `Per Person: $${perPerson.toFixed(2)} (Tip: $${(tipAmount/people).toFixed(2)})`;
+        }
+    });
 });
