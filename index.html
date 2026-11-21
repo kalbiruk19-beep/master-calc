@@ -239,5 +239,10 @@
 
     <!-- We will create this file in Step 3 -->
     <script src="script.js"></script>
+      <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js');
+      }
+        </script>
 </body>
-                </html>
+    </html>
